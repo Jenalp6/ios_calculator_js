@@ -4,61 +4,60 @@ const minute = document.querySelector(".minute");
 const display = document.querySelector(".display");
 // hour.textContent = "18";
 
-const ac = document.querySelector(".ac");
-const pm = document.querySelector(".pm");
-const percent = document.querySelector(".percent");
+const button = document.querySelector(".buttons-container");
+const number = document.querySelectorAll("number");
+const operation = document.querySelector("operator");
+const screendown = document.querySelector(".screen-down");
+const screenup = document.querySelector(".screen-up");
 
-const addition = document.querySelector(".addition");
-const subtraction = document.querySelector(".subtraction");
-const multiplication = document.querySelector(".multiplication");
-const division = document.querySelector(".division");
-const equal = document.querySelector(".equal");
+button.addEventListener("click", (e) => {
+  if (e.target == button) return;
 
-const decimal = document.querySelector(".decimal");
-const number0 = document.querySelector(".number-0");
-const number1 = document.querySelector(".number-1");
-const number2 = document.querySelector(".number-2");
-const number3 = document.querySelector(".number-3");
-const number4 = document.querySelector(".number-4");
-const number5 = document.querySelector(".number-5");
-const number6 = document.querySelector(".number-6");
-const number7 = document.querySelector(".number-7");
-const number8 = document.querySelector(".number-8");
-const number9 = document.querySelector(".number-9");
-const numberArray = [
-  number0,
-  number1,
-  number2,
-  number3,
-  number4,
-  number5,
-  number6,
-  number7,
-  number8,
-  number9,
-];
-
-//! Functions
-
-const handleNumberClick = (numStr) => {
-  //   console.log(numStr);
-  const currentDisplayStr = display.textContent;
-  if (currentDisplayStr === "0") {
-    display.textContent = numStr;
-  } else {
-    display.textContent = parseFloat(
-      currentDisplayStr + numStr
-    ).toLocaleString();
+  const key = e.target;
+  const keyValue = key.innerText;
+  if (key.classList.contains("number")) {
+    screendown.innerText += keyValue;
+  } else if (key.classList.contains("operation")) {
+    // screenup.innerText = screendown.innerText + keyValue;
+    // screendown.innerText = '';
+    mathOperation();
+    screenup.innerHTML = screendown.innerHTML + e.target.innerHTML;
+    screendown.innerText = "";
   }
-};
+});
 
-//! Add Event Listener to numbers and buttons
-for (let i = 0; i < numberArray.length; i++) {
-  const number = numberArray[i];
-  number.addEventListener("click", () => {
-    handleNumberClick(i.toString());
-  });
+function mathOperation() {
+  if (screenup.innerHTML.slice(-1) == "+") {
+    screendown.innerHTML = parseFloat(
+      screenup
+        .innerHTML(+screenup.innerHTML.slice(0, -1) + +screendown.innerHTML)
+        .toFixed(2)
+    );
+  }
 }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 //! Set up the time
 const updateTime = () => {
