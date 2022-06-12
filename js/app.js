@@ -1,6 +1,11 @@
 //* =================================================
 //*                     IOS CALCULATOR
 //* =================================================
+
+//? saat
+
+const hour = document.querySelector(".hour");
+const minute = document.querySelector(".minute");
 //? ekranlar
 
 const prevDisp = document.querySelector(".previous-display");
@@ -135,3 +140,17 @@ const calculate = () => {
   previousOperand = "";
   operation = "";
 };
+
+//set up the time
+const updateTime = () => {
+  const currentTime = new Date();
+
+  const currentHour = currentTime.getHours();
+  const currentMinute = currentTime.getMinutes();
+
+  hour.textContent = currentHour.toString();
+  minute.textContent = currentMinute.toString();
+};
+
+setInterval(updateTime, 1000);
+updateTime();

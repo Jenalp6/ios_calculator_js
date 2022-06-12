@@ -11,6 +11,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
+}
+
+.notify{
+  padding: 0 20px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+}
+.clock{
+  color: white;
 }
 
 .calculator {
@@ -27,7 +39,7 @@ body {
 }
 
 .display {
-  height: 15rem;
+  height: 10rem;
   width: 100%;
   text-align: right;
   padding: 1rem;
@@ -84,6 +96,13 @@ body {
   opacity: 0.5;
 }
 
+.bottom {
+  width:35%;
+  height:5px;
+  background-color: white;
+  border-radius:4px;
+  margin-top: 40px;
+}
 @media screen and (max-width: 576px) {
   .calculator {
     width: 350px;
