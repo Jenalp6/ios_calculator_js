@@ -1,103 +1,57 @@
 //* =================================================
 //*                     IOS CALCULATOR
 //* =================================================
-//? Ekranlar
+//? ekranlar
+
 const prevDisp = document.querySelector(".previous-display");
 const currDisp = document.querySelector(".current-display");
 
-//?Button container
 const btnContainer = document.querySelector(".buttons-container");
 
-//? ara degerler icin degisken tanimlamalari
 let currOperand = "";
 let previousOperand = "";
 let operation = "";
 
-//? Butonlari tasiyan container icin event tanimlamasi
+//? Butonları taşıyan container için event tanımlama
 btnContainer.addEventListener("click", (e) => {
-  //? Herhangi bir sayi(num) sayiya tiklanildi ise
   if (e.target.classList.contains("num")) {
     appendNumber(e.target.textContent);
     updateDisplay();
   }
-
-  //? Herhangi bir operator butonuna (+,-,x,/) tiklanildi ise
   if (e.target.classList.contains("operator")) {
     chooseOperator(e.target.textContent);
-    updateDisplay();
-  }
-  //? Esittir butonuna tiklanildi ise
-  if (e.target.classList.contains("equal")) {
-    calculate();
-    updateDisplay();
-  }
-
-  //? AC butonuna tiklanildi ise
-  if (e.target.classList.contains("ac")) {
-    previousOperand = "";
-    currOperand = "";
-    operation = "";
-    updateDisplay();
-  }
-
-  //? PM butonuna tiklanildi ise
-  if (e.target.classList.contains("pm")) {
-    if (!currOperand) return;
-    currOperand *= -1;
-    updateDisplay();
-  }
-
-  //? Percent butonuna tiklanildi ise
-  if (e.target.classList.contains("percent")) {
-    if (!currOperand) return;
-    currOperand = currOperand / 100;
     updateDisplay();
   }
 });
 
 const appendNumber = (num) => {
-  //? Eger onceden 0 girilmisse ve tekrardan 0 girilise geri don
-  if (currOperand === "0" && num === "0") return;
+  //? ilk sayı 0 ise geri dön
+  if (!currOperand && num === "0") return;
 
-  //? Eğer ilk olarak 0 girilmisse ve sonrasinda da . haricinde baska
-  //? bir sayi girilmis ise sadece girilen yeni sayiyi degiskene aktar.
-  //? Orn: 09 => 9 , 03 => 3 , 0.1 => 0.1
-  if (currOperand === "0" && num !== ".") {
-    currOperand = num;
-    return;
-  }
-
-  //? Eğer şu anki sayi . ise ve önceki girilen sayi . iceriyorsa geri don
+  //? Şu anki sayı '.' ise ve önceki girilen sayı '.' içeriyorsa geri dön
   if (num === "." && currOperand.includes(".")) return;
-
   if (currOperand.length > 10) return;
-  //? Girilen sayilari birlestir.
+  //? Girilen sayıları birleştir
   currOperand += num;
 };
 
 const updateDisplay = () => {
-  if (currOperand.toString().length > 11) {
-    currOperand = Number(currOperand).toExponential(3);
-  }
   currDisp.textContent = currOperand;
-  prevDisp.textContent = `${previousOperand} ${operation}`;
+  prevDisp.textContent = `${previousOperand}  ${operation}`;
 };
 
 const chooseOperator = (op) => {
-  //? ilk sayi girisiinden sonraki islemleri gercekletir
+  //? ilk sayı girişinden sonraki işlemleri gerçekleştirme
   if (previousOperand) {
     calculate();
   }
-
-  //? Degisken swapiing
   operation = op;
   previousOperand = currOperand;
   currOperand = "";
 };
 
 const calculate = () => {
-  let calculation = 0;
-
+  let calculation = 0; // or calculation;
   const prev = Number(previousOperand);
   const current = Number(currOperand);
 
@@ -115,13 +69,8 @@ const calculate = () => {
       calculation = prev / current;
       break;
     default:
-      return;
+      break;
   }
 
   currOperand = calculation;
-
-  //? Esittir butonuna tiklanildiginda ekranda gozukmemesi icin
-  //? previousOperand ve operation'ı silmemiz gerekir
-  previousOperand = "";
-  operation = "";
 };
